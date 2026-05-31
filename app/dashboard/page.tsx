@@ -3,6 +3,8 @@ import VpdTable from '@/components/VpdTable'
 import TemperatureChart from '@/components/TemperatureChart'
 import HumidityChart from '@/components/HumidityChart'
 import SoilChart from '@/components/SoilChart'
+import LightCard from '@/components/LightCard'
+import PlantCamera from '@/components/PlantCamera'
 
 export const dynamic = 'force-dynamic'
 
@@ -42,13 +44,16 @@ export default function DashboardPage() {
           <VpdTable />
         </div>
 
-        {/* Charts */}
-        <div className="grid grid-cols-1 md:grid-cols-2 gap-5">
+        {/* Charts + light status */}
+        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-5">
           <TemperatureChart />
           <HumidityChart />
+          <LightCard />
         </div>
 
         <SoilChart />
+
+        <PlantCamera />
 
         <p className="text-center text-[11px] text-gray-300 pb-2">
           Plant Monitor · atualiza a cada 30s

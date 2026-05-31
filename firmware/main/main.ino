@@ -4,16 +4,15 @@
 #include <DHT.h>
 
 // ─── Configurações ────────────────────────────────────────
-const char* WIFI_SSID     = "sua_rede";
-const char* WIFI_PASSWORD = "sua_senha";
-const char* API_URL       = "https://seu-dominio.vercel.app/api/readings";
-const char* API_KEY       = "sua_api_key";
+const char* WIFI_SSID     = "Akira";
+const char* WIFI_PASSWORD = "tutu@2025";
+const char* API_URL       = "https://plant-monitor-zeta.vercel.app/api/readings";
+const char* API_KEY       = "sk_live_JuCd0PpeecCF5zX2cp8d36m5LZVryA3Q";
 const int   INTERVALO_MS  = 30000;
 
 // ─── Pinos ───────────────────────────────────────────────
-#define DHT_PIN   4
+#define DHT_PIN   2
 #define DHT_TYPE  DHT11
-#define SOIL_PIN  34   // GPIO34 (ADC1_CH6)
 
 DHT dht(DHT_PIN, DHT_TYPE);
 
@@ -40,13 +39,7 @@ void loop() {
     return;
   }
 
-  // YL-38: 0 = muito umido, 4095 = muito seco -> invertemos para 0-100%
-  int rawSoil = analogRead(SOIL_PIN);
-  int soil    = map(rawSoil, 4095, 0, 0, 100);
-  soil        = constrain(soil, 0, 100);
-
-  Serial.printf("Temp: %.1f C | Umidade: %.1f%% | Solo: %d%%\n",
-                temperature, humidity, soil);
+  Serial.printf("Temp: %.1f C | Umidade: %.1f%%\n", temperature, humidity);
 
   if (WiFi.status() != WL_CONNECTED) {
     Serial.println("WiFi desconectado, reconectando...");
@@ -63,7 +56,7 @@ void loop() {
   JsonDocument doc;
   doc["temperature"] = temperature;
   doc["humidity"]    = humidity;
-  doc["soil"]        = soil;
+  doc["soil"]    = 0;
 
   String body;
   serializeJson(doc, body);
