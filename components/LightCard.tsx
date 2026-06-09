@@ -5,6 +5,7 @@ import { useEffect, useState } from 'react'
 type LightStatus = {
   online: boolean
   isOn: boolean
+  brightness?: number
   updatedAt: string
 }
 
@@ -74,6 +75,7 @@ export default function LightCard() {
           {status?.updatedAt && (
             <span className="text-[11px] text-gray-300">
               {new Date(status.updatedAt).toLocaleTimeString('pt-BR')}
+              {status.brightness !== undefined && ` · brilho ${status.brightness}`}
             </span>
           )}
         </div>

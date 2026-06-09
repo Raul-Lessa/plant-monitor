@@ -36,16 +36,17 @@ export async function POST(request: NextRequest) {
 }
 
 export async function GET() {
-  const { data: latest } = await supabase
-    .from('snapshots')
-    .select('created_at')
-    .order('created_at', { ascending: false })
-    .limit(1)
-    .single()
+  const { data: files } = await supabase.storage
+    .from(BUCKET)
+    .list('', { limit: 20, sortBy: { column: 'name', order: 'desc' } })
 
-  const { data } = supabase.storage.from(BUCKET).getPublicUrl('latest.jpg')
-  return Response.json({
-    url: latest ? data.publicUrl : null,
-    capturedAt: latest?.created_at ?? null,
-  })
+  const photos = (files ?? [])
+    .filter(f => f.name !== 'latest.jpg')
+    .slice(0, 3)
+    .map(f => ({
+      url: supabase.storage.from(BUCKET).getPublicUrl(f.name).data.publicUrl,
+      capturedAt: f.updated_at ?? f.created_at,
+    }))
+
+  return Response.json({ photos })
 }

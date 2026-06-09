@@ -2,7 +2,6 @@ import VpdGauge from '@/components/VpdGauge'
 import VpdTable from '@/components/VpdTable'
 import TemperatureChart from '@/components/TemperatureChart'
 import HumidityChart from '@/components/HumidityChart'
-import SoilChart from '@/components/SoilChart'
 import LightCard from '@/components/LightCard'
 import PlantCamera from '@/components/PlantCamera'
 
@@ -50,8 +49,6 @@ export default function DashboardPage() {
           <HumidityChart />
           <LightCard />
         </div>
-
-        <SoilChart />
 
         <PlantCamera />
 
